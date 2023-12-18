@@ -1,6 +1,6 @@
 import path from 'path';
 import axios from 'axios';
-import { logger } from './helper';
+import { logger } from './helper.js';
 
 /**
  * 变量表
