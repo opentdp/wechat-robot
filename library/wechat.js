@@ -1,5 +1,6 @@
 import path from 'path';
 import axios from 'axios';
+import { logger } from './helper';
 
 /**
  * 变量表
@@ -11,25 +12,31 @@ let chatrooms = {};
 let msgtypes = {};
 
 /**
- * 获取群列表
+ * 预加载
  */
 export async function preload() {
 
+    let resp;
+
+    // 初始化
     wrest = axios.create({
         baseURL: process.env.WECHAT_REST_API + '/api',
         responseType: 'json'
     });
 
-    let resp = await wrest.get('/user_info');
+    // 获取个人信息
+    resp = await wrest.get('/user_info');
     if (resp.data.Payload) {
         myinfo = resp.data.Payload;
     }
 
+    // 获取消息类型
     resp = await wrest.get('/msg_types');
     if (resp.data.Payload) {
         msgtypes = resp.data.Payload;
     }
 
+    // 获取好友列表
     resp = await wrest.get('/friends');
     if (resp.data.Payload) {
         resp.data.Payload.forEach(item => {
@@ -37,11 +44,22 @@ export async function preload() {
         });
     }
 
+    // 获取群列表
     resp = await wrest.get('/chatrooms');
     if (resp.data.Payload) {
         resp.data.Payload.forEach(item => {
             chatrooms[item.wxid] = item;
         });
+    }
+
+    // 注册机器人
+    resp = await wrest.get('/enable_forward_msg', {
+        'url': `http://127.0.0.1:${process.env.WEBOX_PORT}/reciver`
+    });
+    if (resp.data.Payload.success) {
+        logger('微信机器人已注册');
+    } else {
+        logger('微信机器人注册失败');
     }
 
 }
