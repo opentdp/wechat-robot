@@ -23,6 +23,7 @@ export function serve() {
     webox.init({
         WEBOX_MODE: process.env.WEBOX_MODE,
         WEBOX_ROOT: process.env.WEBOX_ROOT,
+        WEBOX_HOST: process.env.WEBOX_HOST,
         WEBOX_PORT: process.env.WEBOX_PORT,
     });
 
