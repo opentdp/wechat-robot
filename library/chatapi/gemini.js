@@ -1,6 +1,9 @@
 import fs from 'fs';
 import axios from 'axios';
 
+/**
+ * 变量表
+ */
 const history = {};
 const gemini = axios.create({
     baseURL: 'https://gogai.179971.xyz/v1beta/models',
