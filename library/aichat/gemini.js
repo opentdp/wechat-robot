@@ -12,13 +12,17 @@ const gemini = axios.create({
 
 /**
  * 错误处理
+ * @param {string} id 对象Id
  * @param {error} e 错误
  */
-function parseError(e) {
+function parseError(id, e) {
+
+    history[id].pop();
 
     if (e.response) {
         if (e.response.data) {
             if (e.response.data.error) {
+                history[id] = [];
                 return [
                     '发生了一个无法恢复的错误，已为你清空上下，请稍后重试。',
                     '错误信息：' + e.response.data.error.message
@@ -35,7 +39,7 @@ function parseError(e) {
 
 /**
  * AI 文本聊天
- * @param {string} id 记录Id
+ * @param {string} id 对象Id
  * @param {string} msg 消息内容
  */
 export async function chat(id, msg) {
@@ -74,9 +78,8 @@ export async function chat(id, msg) {
             }
             return '出于某些原因，此问题无法回答';
         }
-    } catch (e) {
-        history[id].pop();
-        return parseError(e);
+    } catch (err) {
+        return parseError(id, err);
     }
 
     return '太累了，我休息会儿。。。';
@@ -85,9 +88,10 @@ export async function chat(id, msg) {
 
 /**
  * AI 图片识别
+ * @param {string} id 对象Id
  * @param {string} path 图片路径
  */
-export async function image(path) {
+export async function image(id, path) {
 
     if (!path || !fs.existsSync(path)) {
         return '图片不存在';
@@ -111,8 +115,8 @@ export async function image(path) {
             }
             return '出于某些原因，此问题无法回答';
         }
-    } catch (e) {
-        return parseError(e);
+    } catch (err) {
+        return parseError(id, err);
     }
 
     return '太累了，我休息会儿。。。';
