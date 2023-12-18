@@ -1,9 +1,9 @@
-# 微信 REST API
+# 微信机器人
 
 基于 [PC Wechat Rest Api](https://github.com/opentdp/wechat-rest) 实现的微信机器人，已实现如下功能：
 
-- 对接谷歌 Gemini 模型实现智能聊天
 - 自动回应拍一拍
+- 对接谷歌 Gemini 模型实现智能聊天
 
 ## 使用方法
 
@@ -15,7 +15,7 @@
 
 **4、** 浏览器打开 `http://localhost:7600` 确认接口服务已启动
 
-**5、** 安装 Nodejs v16+，<https://nodejs.org/dist/v16.20.2/node-v16.20.2-x64.msi>
+**5、** 安装 Nodejs *v16+*，<https://nodejs.org/dist/v16.20.2/node-v16.20.2-x64.msi>
 
 **6、** 克隆本仓库，参考 `example.env` 创建 `.env` 文件
 
