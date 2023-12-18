@@ -17,6 +17,7 @@ let msgtypes = {};
 export async function preload() {
 
     let resp;
+    logger(1, '注册微信机器人...');
 
     // 初始化
     wrest = axios.create({
@@ -24,16 +25,16 @@ export async function preload() {
         responseType: 'json'
     });
 
-    // 获取个人信息
-    resp = await wrest.get('/user_info');
-    if (resp.data.Payload) {
-        myinfo = resp.data.Payload;
-    }
-
     // 获取消息类型
     resp = await wrest.get('/msg_types');
     if (resp.data.Payload) {
         msgtypes = resp.data.Payload;
+    }
+
+    // 获取个人信息
+    resp = await wrest.get('/user_info');
+    if (resp.data.Payload) {
+        myinfo = resp.data.Payload;
     }
 
     // 获取好友列表
@@ -56,10 +57,8 @@ export async function preload() {
     resp = await wrest.post('/enable_forward_msg', {
         'url': `http://127.0.0.1:${process.env.WEBOX_PORT}/reciver`
     });
-    if (resp.data.Payload.success) {
-        logger('微信机器人已注册');
-    } else {
-        logger('微信机器人注册失败');
+    if (resp.data.Payload) {
+        logger(1, `微信机器人注册${resp.data.Payload.success ? '成功' : '失败'}`);
     }
 
 }
