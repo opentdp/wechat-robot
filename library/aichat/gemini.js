@@ -10,7 +10,7 @@ const gemini = axios.create({
     responseType: 'json',
 });
 
-/** 
+/**
  * 错误处理
  * @param {error} e 错误
  */
@@ -53,7 +53,7 @@ export async function chat(id, msg) {
                 return [
                     '/ai 向机器人发送消息',
                     '/new 重置聊天上下文内容',
-                    '请注意：当前上下文最大长度为10，超出限制将按序忽略'
+                    `请注意：当前上下文长度 ${history[id].length}/10，超出限制将按序忽略`
                 ].join('\n');
             default:
                 return '未注册指令';

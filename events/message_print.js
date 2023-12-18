@@ -5,7 +5,8 @@ emitter.on('message', async data => {
 
     let from = await wechat.getUserName(data.sender);
     if (data.roomid) {
-        from = '[' + await wechat.getRoomName(data.roomid) + '] ' + from;
+        const room = await wechat.getRoomName(data.roomid)
+        from = `[${room}] ${from}`;
     }
 
     const type = await wechat.getMsgType(data.type);

@@ -1,10 +1,10 @@
 import { emitter } from '../library/helper.js';
 import * as wechat from '../library/wechat.js';
-import * as gemini from '../library/chatapi/gemini.js';
-
-const ai = gemini;
+import aichat from '../library/aichat/app.js';
 
 emitter.on('message', async data => {
+
+    const ai = aichat('gemini');
 
     switch (data.type) {
         case 1:
