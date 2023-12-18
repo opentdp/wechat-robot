@@ -5,17 +5,29 @@ import axios from 'axios';
  * 变量表
  */
 const history = {};
-const gemini = axios.create({
-    baseURL: 'https://gogai.179971.xyz/v1beta/models',
-    responseType: 'json',
-});
+let gemini = axios;
+
+/**
+ * 预加载
+ */
+export function preload() {
+
+    gemini = axios.create({
+        baseURL: 'https://gogai.179971.xyz/v1beta/models',
+        headers: {
+            'x-goog-api-key': process.env.GOOGLE_API_KEY,
+        },
+        responseType: 'json',
+    });
+
+}
 
 /**
  * 错误处理
  * @param {string} id 对象Id
  * @param {error} e 错误
  */
-function parseError(id, e) {
+export function perror(id, e) {
 
     history[id].pop();
 
@@ -67,9 +79,8 @@ export async function chat(id, msg) {
     history[id].push({ role: 'user', parts: [{ text: msg }] });
 
     try {
-        const path = `/gemini-pro:generateContent?key=${process.env.GOOGLE_API_KEY}`;
         const body = { contents: history[id] };
-        const resp = await gemini.post(path, body);
+        const resp = await gemini.post('/gemini-pro:generateContent', body);
         if (resp.data.candidates && resp.data.candidates.length > 0) {
             if (resp.data.candidates[0].content) {
                 const txt = resp.data.candidates[0].content.parts[0].text;
@@ -79,7 +90,7 @@ export async function chat(id, msg) {
             return '出于某些原因，此问题无法回答';
         }
     } catch (err) {
-        return parseError(id, err);
+        return perror(id, err);
     }
 
     return '太累了，我休息会儿。。。';
@@ -98,7 +109,6 @@ export async function image(id, path) {
     }
 
     try {
-        const path = `/gemini-pro-vision:generateContent?key=${process.env.GOOGLE_API_KEY}`;
         const data = fs.readFileSync(path).toString('base64');
         const body = {
             contents: {
@@ -108,7 +118,7 @@ export async function image(id, path) {
                 ]
             }
         };
-        const resp = await gemini.post(path, body);
+        const resp = await gemini.post('/gemini-pro-vision:generateContent', body);
         if (resp.data.candidates && resp.data.candidates.length > 0) {
             if (resp.data.candidates[0].content) {
                 return resp.data.candidates[0].content.parts[0].text;
@@ -116,7 +126,7 @@ export async function image(id, path) {
             return '出于某些原因，此问题无法回答';
         }
     } catch (err) {
-        return parseError(id, err);
+        return perror(id, err);
     }
 
     return '太累了，我休息会儿。。。';

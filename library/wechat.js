@@ -6,9 +6,9 @@ import axios from 'axios';
  */
 let wrest = axios;
 let msgtypes = {};
-let myinfo = {};
-let friends = {};
-let chatrooms = {};
+let userinfo = {};
+const friends = {};
+const chatrooms = {};
 
 /**
  * 预加载
@@ -32,7 +32,7 @@ export async function preload() {
     // 获取个人信息
     resp = await wrest.get('/user_info');
     if (resp.data.Payload) {
-        myinfo = resp.data.Payload;
+        userinfo = resp.data.Payload;
     }
 
     // 获取好友列表
@@ -88,8 +88,8 @@ export async function getRoomName(wxid) {
  */
 export async function getUserName(wxid) {
 
-    if (myinfo.wxid == wxid) {
-        return myinfo.name;
+    if (userinfo.wxid == wxid) {
+        return userinfo.name;
     }
 
     if (friends[wxid] && friends[wxid].name) {

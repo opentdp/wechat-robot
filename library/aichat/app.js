@@ -4,8 +4,7 @@ export default function (type) {
 
     switch (type) {
         case 'gemini':
-            return gemini;
-        default:
+            gemini.preload();
             return gemini;
     }
 
