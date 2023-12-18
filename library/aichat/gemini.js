@@ -19,7 +19,6 @@ function parseError(e) {
     if (e.response) {
         if (e.response.data) {
             if (e.response.data.error) {
-                history[id] = [];
                 return [
                     '发生了一个无法恢复的错误，已为你清空上下，请稍后重试。',
                     '错误信息：' + e.response.data.error.message
