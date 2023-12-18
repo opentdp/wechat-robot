@@ -53,7 +53,7 @@ export async function preload() {
     }
 
     // 注册机器人
-    resp = await wrest.get('/enable_forward_msg', {
+    resp = await wrest.post('/enable_forward_msg', {
         'url': `http://127.0.0.1:${process.env.WEBOX_PORT}/reciver`
     });
     if (resp.data.Payload.success) {
