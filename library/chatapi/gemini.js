@@ -10,6 +10,30 @@ const gemini = axios.create({
     responseType: 'json',
 });
 
+/** 
+ * 错误处理
+ * @param {error} e 错误
+ */
+function parseError(e) {
+
+    if (e.response) {
+        if (e.response.data) {
+            if (e.response.data.error) {
+                history[id] = [];
+                return [
+                    '发生了一个无法恢复的错误，已为你清空上下，请稍后重试。',
+                    '错误信息：' + e.response.data.error.message
+                ].join('\n');
+            }
+            return e.response.data || '发生了一个未知的接口错误，请稍后重试';
+        }
+        return e.response.statusText || '发生了一个未知的网络错误，请稍后重试';
+    }
+
+    return e.message || '发生了一个未知的错误，请稍后重试';
+
+}
+
 /**
  * AI 文本聊天
  * @param {string} id 记录Id
@@ -40,9 +64,9 @@ export async function chat(id, msg) {
     history[id].push({ role: 'user', parts: [{ text: msg }] });
 
     try {
+        const body = { 'contents': history[id] };
         const resp = await gemini.post(
-            `/gemini-pro:generateContent?key=${process.env.GOOGLE_API_KEY}`,
-            { 'contents': history[id] }
+            `/gemini-pro:generateContent?key=${process.env.GOOGLE_API_KEY}`, body
         );
         if (resp.data.candidates && resp.data.candidates.length > 0) {
             if (!resp.data.candidates[0].content) {
@@ -54,20 +78,7 @@ export async function chat(id, msg) {
         }
     } catch (e) {
         history[id].pop();
-        if (e.response) {
-            if (e.response.data) {
-                if (e.response.data.error) {
-                    history[id] = [];
-                    return [
-                        '发生了一个无法恢复的错误，已为你清空上下，请稍后重试。',
-                        '错误信息：' + e.response.data.error.message
-                    ].join('\n');
-                }
-                return e.response.data || '发生了一个未知的接口错误，请稍后重试';
-            }
-            return e.response.statusText || '发生了一个未知的网络错误，请稍后重试';
-        }
-        return e.message || '发生了一个未知的错误，请稍后重试';
+        return parseError(e);
     }
 
     return '太累了，我休息会儿。。。';
@@ -85,21 +96,21 @@ export async function image(path) {
     }
 
     try {
-        const resp = await gemini.post(
-            `/gemini-pro-vision:generateContent?key=${process.env.GOOGLE_API_KEY}`,
-            {
-                'contents': {
-                    'parts': [
-                        { 'text': '识别并描述这张图片' },
-                        {
-                            'inline_data': {
-                                'mime_type': 'image/jpeg',
-                                'data': fs.readFileSync(path).toString('base64')
-                            }
+        const body = {
+            'contents': {
+                'parts': [
+                    { 'text': '识别并描述这张图片' },
+                    {
+                        'inline_data': {
+                            'mime_type': 'image/jpeg',
+                            'data': fs.readFileSync(path).toString('base64')
                         }
-                    ]
-                }
+                    }
+                ]
             }
+        };
+        const resp = await gemini.post(
+            `/gemini-pro-vision:generateContent?key=${process.env.GOOGLE_API_KEY}`, body
         );
         if (resp.data.candidates && resp.data.candidates.length > 0) {
             if (!resp.data.candidates[0].content) {
@@ -108,16 +119,9 @@ export async function image(path) {
             return resp.data.candidates[0].content.parts[0].text;
         }
     } catch (e) {
-        if (e.response) {
-            if (e.response.data) {
-                if (e.response.data.error) {
-                    return '错误信息：' + e.response.data.error.message;
-                }
-                return e.response.data || '发生了一个未知的接口错误，请稍后重试';
-            }
-            return e.response.statusText || '发生了一个未知的网络错误，请稍后重试';
-        }
-        return e.message || '发生了一个未知的错误，请稍后重试';
+        return parseError(e);
     }
+
+    return '太累了，我休息会儿。。。';
 
 }
