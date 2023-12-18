@@ -4,7 +4,7 @@
  */
 
 console.log('=================================================');
-console.log('=           Wechat Rest Client v0.1.0.0         =');
+console.log('=           WeChat Rest Client v0.1.0.0         =');
 console.log('=                  Update: Dec. 16 2023         =');
 console.log('=================================================');
 

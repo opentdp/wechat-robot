@@ -1,16 +1,14 @@
 import path from 'path';
 import axios from 'axios';
 
-import { logger } from './helper.js';
-
 /**
  * 变量表
  */
 let wrest = axios;
+let msgtypes = {};
 let myinfo = {};
 let friends = {};
 let chatrooms = {};
-let msgtypes = {};
 
 /**
  * 预加载
@@ -100,7 +98,8 @@ export async function getUserName(wxid) {
 
     let resp = await wrest.get('/user_info/' + wxid);
     if (resp.data.Payload && resp.data.Payload.name) {
-        return resp.data.Payload.name;
+        friends[wxid] = resp.data.Payload;
+        return friends[wxid].name;
     }
 
     return '-';

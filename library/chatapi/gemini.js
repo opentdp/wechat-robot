@@ -64,17 +64,16 @@ export async function chat(id, msg) {
     history[id].push({ role: 'user', parts: [{ text: msg }] });
 
     try {
-        const body = { 'contents': history[id] };
-        const resp = await gemini.post(
-            `/gemini-pro:generateContent?key=${process.env.GOOGLE_API_KEY}`, body
-        );
+        const path = `/gemini-pro:generateContent?key=${process.env.GOOGLE_API_KEY}`;
+        const body = { contents: history[id] };
+        const resp = await gemini.post(path, body);
         if (resp.data.candidates && resp.data.candidates.length > 0) {
-            if (!resp.data.candidates[0].content) {
-                throw new Error('由于某些原因，此问题无法回答');
+            if (resp.data.candidates[0].content) {
+                const txt = resp.data.candidates[0].content.parts[0].text;
+                history[id].push({ role: 'model', parts: [{ text: txt }] });
+                return txt;
             }
-            const txt = resp.data.candidates[0].content.parts[0].text;
-            history[id].push({ role: 'model', parts: [{ text: txt }] });
-            return txt;
+            return '出于某些原因，此问题无法回答';
         }
     } catch (e) {
         history[id].pop();
@@ -96,27 +95,22 @@ export async function image(path) {
     }
 
     try {
+        const path = `/gemini-pro-vision:generateContent?key=${process.env.GOOGLE_API_KEY}`;
+        const data = fs.readFileSync(path).toString('base64');
         const body = {
-            'contents': {
-                'parts': [
-                    { 'text': '识别并描述这张图片' },
-                    {
-                        'inline_data': {
-                            'mime_type': 'image/jpeg',
-                            'data': fs.readFileSync(path).toString('base64')
-                        }
-                    }
+            contents: {
+                parts: [
+                    { text: '识别并描述这张图片' },
+                    { inline_data: { mime_type: 'image/jpeg', data: data } }
                 ]
             }
         };
-        const resp = await gemini.post(
-            `/gemini-pro-vision:generateContent?key=${process.env.GOOGLE_API_KEY}`, body
-        );
+        const resp = await gemini.post(path, body);
         if (resp.data.candidates && resp.data.candidates.length > 0) {
-            if (!resp.data.candidates[0].content) {
-                throw new Error('出于某些原因，此问题无法回答');
+            if (resp.data.candidates[0].content) {
+                return resp.data.candidates[0].content.parts[0].text;
             }
-            return resp.data.candidates[0].content.parts[0].text;
+            return '出于某些原因，此问题无法回答';
         }
     } catch (e) {
         return parseError(e);
