@@ -18,7 +18,6 @@ let msgtypes = {};
 export async function preload() {
 
     let resp;
-    logger(1, '注册微信机器人...');
 
     // 初始化
     wrest = axios.create({
@@ -55,12 +54,9 @@ export async function preload() {
     }
 
     // 注册机器人
-    resp = await wrest.post('/enable_forward_msg', {
+    await wrest.post('/enable_forward_msg', {
         'url': `http://127.0.0.1:${process.env.WEBOX_PORT}/reciver`
-    });
-    if (resp.data.Payload) {
-        logger(1, `微信机器人注册${resp.data.Payload.success ? '成功' : '失败'}`);
-    }
+    }).catch(() => { })
 
 }
 
