@@ -1,3 +1,4 @@
+import { parseStringPromise } from 'xml2js';
 import { emitter } from '../library/helper.js';
 import * as wechat from '../library/wechat.js';
 
