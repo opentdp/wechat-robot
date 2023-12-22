@@ -107,6 +107,20 @@ export async function getUserName(wxid) {
 }
 
 /**
+ * 接受好友请求
+ * @param {string} scene 场景
+ * @param {string} v3 encryptusername
+ * @param {string} v4 ticket
+ * @returns 
+ */
+export async function accpetFriend(scene, v3, v4) {
+
+    const resp = await wrest.post('/accept_new_friend', { scene, v3, v4 });
+    return resp.data.Payload;
+
+}
+
+/**
  * 发送文本
  * @param {string} receiver 接收Id
  * @param {string} msg 消息内容
