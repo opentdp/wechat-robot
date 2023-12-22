@@ -13,7 +13,7 @@ let gemini = axios;
 export function preload() {
 
     gemini = axios.create({
-        baseURL: 'https://gogai.179971.xyz/v1beta/models',
+        baseURL: 'https://googai.173371.xyz/v1beta/models',
         headers: {
             'x-goog-api-key': process.env.GOOGLE_API_KEY,
         },
