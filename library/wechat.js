@@ -115,7 +115,7 @@ export async function getUserName(wxid) {
  */
 export async function accpetFriend(scene, v3, v4) {
 
-    const resp = await wrest.post('/accept_new_friend', { scene, v3, v4 });
+    const resp = await wrest.post('/accept_new_friend', { scene: +scene, v3, v4 });
     return resp.data.Payload;
 
 }

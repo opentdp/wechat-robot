@@ -18,6 +18,13 @@ emitter.on('message', async data => {
             break;
         case 3:
             console.log(data.extra);
+        case 37:
+            const content = await parseStringPromise(data.content);
+            if (content && content.msg && content.msg.$) {
+                const smsg = content.msg.$.content
+                const suser = content.msg.$.sourcenickname
+                console.log('收到好友请求', smsg ? `备注：${smsg}` : '', suser ? `来自 ${suser} 分享的名片` : '');
+            }
             break;
         case 49:
             const match = /<title>(.*?)<\/title>/.exec(data.content);
