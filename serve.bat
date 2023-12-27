@@ -1,7 +1,5 @@
 @ECHO OFF
 
-SET "PATH=%PATH%;bin\"
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 CD /D %~dp0
@@ -23,4 +21,4 @@ ECHO %dateline% >node_modules\update.txt
 
 CALL npm start
 
-PAUSE > NUL && EXIT
+cmd /k

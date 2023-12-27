@@ -7,26 +7,24 @@
 
 ## 使用方法
 
-**1、** 下载 [WeChatSetup-3.9.2.23](https://github.com/opentdp/wechat-rest/releases/download/v0.0.1/WeChatSetup-3.9.2.23.exe) 和 [Wechat-rest](https://github.com/opentdp/wechat-rest/releases/download/v0.4.4/wechat-rest.zip)
+**1、** 下载并安装 [WeChat-v3.9.2.23](https://github.com/opentdp/wechat-rest/releases/download/v0.0.1/WeChatSetup-3.9.2.23.exe)，必须此版本
 
-**2、** 在一台 Windows 系统电脑上安装刚刚下载的微信
+**2、** 下载并安装 [Node-v16.20.2](https://nodejs.org/dist/v16.20.2/node-v16.20.2-x64.msi)，大于此版本即可
 
-**3、** 同一台电脑上，解压 `Wechat-rest` ，双击 `wrest.exe` 启动接口服务
+**3、** 下载本仓库源码，参考 `example.env` 创建 `.env` 文件
 
-**4、** 浏览器打开 `http://localhost:7600` 确认接口服务已启动
+**4、** 双击 `wrest.bat` 启动微信接口服务
 
-**5、** 安装 Nodejs *v16+*，<https://nodejs.org/dist/v16.20.2/node-v16.20.2-x64.msi>
+**5、** 双击 `serve.bat` 启动机器人
 
-**6、** 克隆本仓库，参考 `example.env` 创建 `.env` 文件
-
-**7、** 修改 `.env` 文件并运行 `serve.bat` 启动机器人
+> 如果双击后闪退，请修改bat文件的换行为windows格式
 
 ## 配置说明
 
 ```shell
 # 监听端口
 WEBOX_MODE=production
-WEBOX_ROOT=src/webroot
+WEBOX_ROOT=apps/webroot
 WEBOX_HOST=127.0.0.1
 WEBOX_PORT=7660
 
