@@ -4,8 +4,6 @@ import * as wechat from '../library/wechat.js';
 
 emitter.on('message', async data => {
 
-    const ai = aichat('gemini');
-
     switch (data.type) {
         case 1:
             // 忽略公号消息
@@ -14,14 +12,14 @@ emitter.on('message', async data => {
             }
             // 处理私聊消息
             if (!data.is_group) {
-                const resp = await ai.chat(data.sender, data.content);
+                const resp = await aichat(data.sender, data.content);
                 wechat.sendTxt(data.sender, resp);
                 return;
             }
             // 处理群内的指令
-            if (/^\/(ai\s|[a-z]{3,7}$)/.test(data.content)) {
+            if (/^\/[a-z-0-9]{2,9}$/.test(data.content)) {
                 const name = await wechat.getUserName(data.sender);
-                const resp = await ai.chat(data.sender + data.roomid, data.content);
+                const resp = await aichat(data.sender, data.content, data.roomid);
                 wechat.sendTxt(data.roomid, '@' + name + '\n' + resp, data.sender);
                 return;
             }

@@ -17,6 +17,7 @@ export function preload() {
         baseURL: 'https://googai.173371.xyz/v1beta/models',
         headers: {
             'x-goog-api-key': process.env.GOOGLE_API_KEY,
+            'Content-Type': 'application/json',
         },
         responseType: 'json',
     });
