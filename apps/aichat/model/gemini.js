@@ -37,10 +37,7 @@ export function perror(id, e) {
         if (e.response.data) {
             if (e.response.data.error) {
                 history[id] = [];
-                return [
-                    '发生了一个无法恢复的错误，已为你清空上下文，请稍后重试。',
-                    '错误信息：' + e.response.data.error.message
-                ].join('\n');
+                return '发生了一个无法恢复的错误，已为你清空上下文，请稍后重试。\n错误信息：' + e.response.data.error.message;
             }
             return e.response.data || '发生了一个未知的接口错误，请稍后重试';
         }
@@ -71,11 +68,10 @@ export async function chat(id, msg) {
             }
             return '出于某些原因，此问题无法回答';
         }
+        return '太累了，我休息会儿。。。';
     } catch (err) {
         return perror(id, err);
     }
-
-    return '太累了，我休息会儿。。。';
 
 }
 
