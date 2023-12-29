@@ -157,3 +157,13 @@ export async function saveImage(msgid, extra) {
     return resp.data.Payload;
 
 }
+
+/**
+ * 邀请群成员
+ */
+export async function inviteChatroomMembers(roomid, wxids) {
+
+    const resp = await wrest.post('/invite_chatroom_members', { roomid, wxids });
+    return resp.data.Payload;
+
+}

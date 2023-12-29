@@ -1,10 +1,11 @@
 import fs from 'fs';
 import axios from 'axios';
 
+import { cmd, history } from './cmd.js';
+
 /**
  * 变量表
  */
-const history = {};
 let gemini = axios;
 
 /**
@@ -36,7 +37,7 @@ export function perror(id, e) {
             if (e.response.data.error) {
                 history[id] = [];
                 return [
-                    '发生了一个无法恢复的错误，已为你清空上下，请稍后重试。',
+                    '发生了一个无法恢复的错误，已为你清空上下文，请稍后重试。',
                     '错误信息：' + e.response.data.error.message
                 ].join('\n');
             }
@@ -56,27 +57,12 @@ export function perror(id, e) {
  */
 export async function chat(id, msg) {
 
-    history[id] || (history[id] = []);
-    history[id].length > 10 && history[id].splice(0, 2);
-
-    if (/^\/[a-z]{3,7}$/.test(msg)) {
-        switch (msg) {
-            case '/new':
-                history[id] = [];
-                return '已清空上下文';
-            case '/help':
-                return [
-                    '/ai 向机器人发送消息',
-                    '/new 重置聊天上下文内容',
-                    `请注意：当前上下文长度 ${history[id].length}/10，超出限制将按序忽略`
-                ].join('\n');
-            default:
-                return '未注册指令';
-        }
+    const { text, reply } = await cmd(id, msg);
+    if (reply) {
+        return text;
     }
 
-    msg = msg.replace(/^\/ai\s/, '').trim();
-    history[id].push({ role: 'user', parts: [{ text: msg }] });
+    history[id].push({ role: 'user', parts: [{ text }] });
 
     try {
         const body = { contents: history[id] };
