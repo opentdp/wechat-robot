@@ -9,7 +9,7 @@ export async function cmd(id, msg) {
 
     history[id] || (history[id] = []);
 
-    if (/^\/[a-z-0-9]{3,7}$/.test(msg)) {
+    if (/^\/[a-z-0-9]{2,9}$/.test(msg)) {
         switch (msg) {
             case '/new':
                 history[id] = [];
@@ -17,8 +17,8 @@ export async function cmd(id, msg) {
                 break;
             case '/help':
                 const list = [];
-                list.push('/ai 向机器人发送消息');
-                list.push(`/new 重置上下文，当前长度 ${history[id].length}`);
+                list.push('/ai 向我提问或发起聊天');
+                list.push(`/new 重置上下文，当前占用 ${history[id].length}`);
                 if (id.indexOf('@chatroom') === -1) {
                     list.push('/room-1 加入 OpenTDP 开发群');
                     list.push('/room-2 加入 OpenTDP 闲聊群');
