@@ -17,7 +17,7 @@ emitter.on('message', async data => {
                 return;
             }
             // 处理群内的指令
-            if (/^\/(ai\s|[a-z-0-9]{2,30}$)/.test(data.content)) {
+            if (/^\/(ai\s|[a-z:0-9]{2,30}$)/.test(data.content)) {
                 const name = await wechat.getUserName(data.sender);
                 const resp = await aichat(data.sender, data.content, data.roomid);
                 wechat.sendTxt(data.roomid, '@' + name + '\n' + resp, data.sender);
