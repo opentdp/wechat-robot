@@ -13,6 +13,11 @@ let gemini = axios;
  */
 export function preload() {
 
+    if (preload.done) {
+        preload.done = true;
+        return;
+    }
+
     gemini = axios.create({
         baseURL: 'https://googai.173371.xyz/v1beta/models',
         headers: {

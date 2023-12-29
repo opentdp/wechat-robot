@@ -12,6 +12,11 @@ let openai = axios;
  */
 export function preload() {
 
+    if (preload.done) {
+        preload.done = true;
+        return;
+    }
+
     openai = axios.create({
         baseURL: 'https://chat.451024.xyz/v1',
         headers: {

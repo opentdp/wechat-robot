@@ -16,16 +16,10 @@ export default async function (sender, content, roomid) {
 
     switch (type) {
         case 'gemini':
-            if (!ready.gemini) {
-                ready.gemini = true;
-                gemini.preload();
-            }
+            gemini.preload();
             return await gemini.chat(uuid, text);
         case 'gpt35':
-            if (!ready.gpt35) {
-                ready.gpt35 = true;
-                gpt35.preload();
-            }
+            gpt35.preload();
             return await gpt35.chat(uuid, text);
     }
 
