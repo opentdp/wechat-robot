@@ -18,8 +18,8 @@ export async function cmd(id, msg) {
             case '/help':
                 const list = [];
                 list.push('/ai 向机器人发送消息');
-                list.push(`/new 重置上下文（当前长度 ${history[id].length}）`);
-                if (msg.indexOf('@chatroom') === -1) {
+                list.push(`/new 重置上下文，当前长度 ${history[id].length}`);
+                if (id.indexOf('@chatroom') === -1) {
                     list.push('/room-1 加入 OpenTDP 开发群');
                     list.push('/room-2 加入 OpenTDP 闲聊群');
                 }
@@ -27,12 +27,20 @@ export async function cmd(id, msg) {
                 text = list.join('\n');
                 break;
             case '/room-1':
-                resp = await inviteChatroomMembers('38699745819@chatroom', id);
-                text = '已发送 OpenTDP 开发群的邀请，稍后请点击进入';
+                if (id.indexOf('@chatroom') === -1) {
+                    resp = await inviteChatroomMembers('38699745819@chatroom', id);
+                    text = '已发送 OpenTDP 开发群的邀请，稍后请点击进入';
+                } else {
+                    text = '群聊无法使用该指令';
+                }
                 break;
             case '/room-2':
-                resp = await inviteChatroomMembers('17907657671@chatroom', id);
-                text = '已发送 OpenTDP 闲聊群的邀请，稍后请点击进入';
+                if (id.indexOf('@chatroom') === -1) {
+                    resp = await inviteChatroomMembers('17907657671@chatroom', id);
+                    text = '已发送 OpenTDP 闲聊群的邀请，稍后请点击进入';
+                } else {
+                    text = '群聊无法使用该指令';
+                }
                 break;
             default:
                 text = '未注册指令';
