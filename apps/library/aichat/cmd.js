@@ -16,13 +16,14 @@ export async function cmd(id, msg) {
                 text = '已清空上下文';
                 break;
             case '/help':
-                text = [
-                    '/ai 向机器人发送消息',
-                    '/new 重置聊天上下文内容',
-                    '/room-1 加入 OpenTDP 开发群',
-                    '/room-2 加入 OpenTDP 闲聊群',
-                    `请注意：当前已使用上下文长度 ${history[id].length}`
-                ].join('\n');
+                const list = [];
+                list.push('/ai 向机器人发送消息');
+                list.push(`/new 重置上下文（当前长度 ${history[id].length}）`);
+                if (msg.indexOf('@chatroom') === -1) {
+                    list.push('/room-1 加入 OpenTDP 开发群');
+                    list.push('/room-2 加入 OpenTDP 闲聊群');
+                }
+                text = list.join('\n');
                 break;
             case '/room-1':
                 resp = await inviteChatroomMembers('38699745819@chatroom', id);
