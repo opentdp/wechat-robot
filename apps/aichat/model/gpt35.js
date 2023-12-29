@@ -53,11 +53,14 @@ export async function chat(id, msg) {
         const body = { model: 'gpt-3.5-turbo', messages: history[id] };
         const resp = await openai.post('/chat/completions', body);
         if (resp && resp.data && resp.data.choices) {
-            const mesg = resp.data.choices[0].message;
-            history[id].push(mesg);
-            return mesg.content;
+            if (resp.data.choices[0]) {
+                const mesg = resp.data.choices[0].message;
+                history[id].push(mesg);
+                return mesg.content;
+            }
+            return '出于某些原因，此问题无法回答';
         }
-        return '出于某些原因，此问题无法回答';
+        return '太累了，我休息会儿。。。';
     } catch (err) {
         return perror(id, err);
     }
