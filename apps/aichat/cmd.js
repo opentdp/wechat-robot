@@ -18,7 +18,7 @@ export async function cmd(id, msg) {
                 break;
             case '/help':
                 const list = [];
-                list.push('/ai 向我提问或发起聊天');
+                list.push('/ai 提问或交谈');
                 list.push('/new 重置上下文内容');
                 list.push('/model-gpt35 切换为 openai gpt-3.5 模型');
                 list.push('/model-gemini 切换为 google gemini 模型');
@@ -27,7 +27,7 @@ export async function cmd(id, msg) {
                     list.push('/room-2 加入 OpenTDP 闲聊群');
                 }
                 list.push('/help 显示此帮助信息');
-                list.push(`当前对话模型 ${models[id]}，上下文长度 ${history[id].length}`)
+                list.push(`\n当前对话模型 ${models[id]}，上下文长度 ${history[id].length}`)
                 text = list.join('\n');
                 break;
             case '/room-1':

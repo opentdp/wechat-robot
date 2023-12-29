@@ -20,7 +20,7 @@ emitter.on('message', async data => {
             }
             // 添加好友后自动回复
             if (/现在可以开始聊天了/.test(data.content)) {
-                wechat.sendTxt(data.sender, '你好，我是小欧，可以和我聊天啦！');
+                wechat.sendTxt(data.sender, '你好，我是小欧，可以和我聊天啦！回复 /help 查看帮助信息。');
             }
             break;
     }
