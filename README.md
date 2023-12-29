@@ -2,6 +2,8 @@
 
 基于 [PC Wechat Rest Api](https://github.com/opentdp/wechat-rest) 实现的微信机器人，已实现如下功能：
 
+- 自动添加好友
+- 自动拉好友进群
 - 自动回应拍一拍
 - 对接谷歌 Gemini 模型实现智能聊天
 
