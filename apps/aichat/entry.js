@@ -1,13 +1,18 @@
 import * as gemini from './model/gemini.js';
-import * as openai from './model/openai.js';
+import * as gpt35 from './model/gpt35.js';
+import { cmd, models } from './cmd.js';
 
-const models = {}
 const ready = {}
 
 export default async function (sender, content, roomid) {
 
-    const type = models[sender] || (models[sender] = 'gemini');
-    const uuid = sender + (roomid || '');
+    const uuid = sender + (roomid ? '#' + roomid : '');
+    const type = models[uuid] || (models[uuid] = 'gemini');
+
+    const { text, reply } = await cmd(uuid, content);
+    if (reply) {
+        return text;
+    }
 
     switch (type) {
         case 'gemini':
@@ -15,13 +20,13 @@ export default async function (sender, content, roomid) {
                 ready.gemini = true;
                 gemini.preload();
             }
-            return await gemini.chat(uuid, content);
-        case 'openai':
-            if (!ready.openai) {
-                ready.openai = true;
-                openai.preload();
+            return await gemini.chat(uuid, text);
+        case 'gpt35':
+            if (!ready.gpt35) {
+                ready.gpt35 = true;
+                gpt35.preload();
             }
-            return await openai.chat(uuid, content);
+            return await gpt35.chat(uuid, text);
     }
 
     return '模型暂不可用';

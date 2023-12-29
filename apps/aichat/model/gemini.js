@@ -1,7 +1,7 @@
 import fs from 'fs';
 import axios from 'axios';
 
-import { cmd, history } from '../cmd.js';
+import { history } from '../cmd.js';
 
 /**
  * 变量表
@@ -58,12 +58,7 @@ export function perror(id, e) {
  */
 export async function chat(id, msg) {
 
-    const { text, reply } = await cmd(id, msg);
-    if (reply) {
-        return text;
-    }
-
-    history[id].push({ role: 'user', parts: [{ text }] });
+    history[id].push({ role: 'user', parts: [{ text: msg }] });
 
     try {
         const body = { contents: history[id] };

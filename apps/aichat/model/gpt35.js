@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { cmd, history } from '../cmd.js';
+import { history } from '../cmd.js';
 
 /**
  * 变量表
@@ -57,12 +57,7 @@ export function perror(id, e) {
  */
 export async function chat(id, msg) {
 
-    const { text, reply } = await cmd(id, msg);
-    if (reply) {
-        return text;
-    }
-
-    history[id].push({ role: 'user', content: text });
+    history[id].push({ role: 'user', content: msg });
 
     try {
         const body = { model: 'gpt-3.5-turbo', messages: history[id] };

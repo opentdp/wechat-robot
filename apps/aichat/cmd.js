@@ -1,5 +1,6 @@
 import { inviteChatroomMembers } from '../library/wechat.js';
 
+export const models = {};
 export const history = {};
 
 export async function cmd(id, msg) {
@@ -9,7 +10,7 @@ export async function cmd(id, msg) {
 
     history[id] || (history[id] = []);
 
-    if (/^\/[a-z-0-9]{2,9}$/.test(msg)) {
+    if (/^\/[a-z-0-9]{2,30}$/.test(msg)) {
         switch (msg) {
             case '/new':
                 history[id] = [];
@@ -18,12 +19,15 @@ export async function cmd(id, msg) {
             case '/help':
                 const list = [];
                 list.push('/ai 向我提问或发起聊天');
-                list.push(`/new 重置上下文，当前占用 ${history[id].length}`);
+                list.push('/new 重置上下文内容');
+                list.push('/model-gpt35 切换为 openai gpt-3.5 模型');
+                list.push('/model-gemini 切换为 google gemini 模型');
                 if (id.indexOf('@chatroom') === -1) {
                     list.push('/room-1 加入 OpenTDP 开发群');
                     list.push('/room-2 加入 OpenTDP 闲聊群');
                 }
                 list.push('/help 显示此帮助信息');
+                list.push(`当前对话模型 ${models[id]}，上下文长度 ${history[id].length}`)
                 text = list.join('\n');
                 break;
             case '/room-1':
@@ -42,6 +46,14 @@ export async function cmd(id, msg) {
                     text = '群聊无法使用该指令';
                 }
                 break;
+            case '/model-gpt35':
+                history[id] = [];
+                models[id] = 'gpt35';
+                return '你的对话模型已切换为 gpt-3.5';
+            case '/model-gemini':
+                history[id] = [];
+                models[id] = 'gemini';
+                return '你的对话模型已切换为 gemini';
             default:
                 text = '未注册指令';
                 break;
