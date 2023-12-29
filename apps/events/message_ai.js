@@ -1,6 +1,6 @@
+import aichat from '../aichat/entry.js';
 import { emitter } from '../library/helper.js';
 import * as wechat from '../library/wechat.js';
-import aichat from '../library/aichat/app.js';
 
 emitter.on('message', async data => {
 

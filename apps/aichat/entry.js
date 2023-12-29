@@ -1,4 +1,4 @@
-import * as gemini from './gemini.js';
+import * as gemini from './model/gemini.js';
 
 export default function (type) {
 

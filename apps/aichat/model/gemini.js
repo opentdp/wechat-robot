@@ -1,7 +1,7 @@
 import fs from 'fs';
 import axios from 'axios';
 
-import { cmd, history } from './cmd.js';
+import { cmd, history } from '../cmd.js';
 
 /**
  * 变量表
