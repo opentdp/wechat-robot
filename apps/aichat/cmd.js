@@ -1,4 +1,4 @@
-import { inviteChatroomMembers } from '../wechat.js';
+import { inviteChatroomMembers } from '../library/wechat.js';
 
 export const history = {};
 
