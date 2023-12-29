@@ -49,11 +49,13 @@ export async function cmd(id, msg) {
             case '/model-gpt35':
                 history[id] = [];
                 models[id] = 'gpt35';
-                return '你的对话模型已切换为 gpt-3.5';
+                text = '你的对话模型已切换为 openai gpt-3.5';
+                break;
             case '/model-gemini':
                 history[id] = [];
                 models[id] = 'gemini';
-                return '你的对话模型已切换为 gemini';
+                text = '你的对话模型已切换为 google gemini';
+                break;
             default:
                 text = '未注册指令';
                 break;
