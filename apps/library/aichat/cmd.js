@@ -23,6 +23,7 @@ export async function cmd(id, msg) {
                     list.push('/room-1 加入 OpenTDP 开发群');
                     list.push('/room-2 加入 OpenTDP 闲聊群');
                 }
+                list.push('/help 显示此帮助信息');
                 text = list.join('\n');
                 break;
             case '/room-1':
