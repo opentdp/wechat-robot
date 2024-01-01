@@ -2,8 +2,6 @@ import * as gemini from './model/gemini.js';
 import * as gpt35 from './model/gpt35.js';
 import { cmd, models } from './cmd.js';
 
-const ready = {}
-
 export default async function (sender, content, roomid) {
 
     const uuid = sender + (roomid ? '#' + roomid : '');
