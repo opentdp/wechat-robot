@@ -36,5 +36,14 @@ WEBOX_PORT=7660
 WECHAT_REST_API=http://127.0.0.1:7600
 
 # Google AI 密钥
-GOOGLE_AI_KEY=YOUR-GOOGLE-AI-API-KEY
+GOOGLE_AI_KEY=YOUR-AI-API-KEY
+
+# OpenAI 密钥
+OPENAI_KEY=YOUR-AI-API-KEY
+
+# 响应模式 [0:黑名单, 1:白名单]
+export const ResponsiveMode=0
+
+# 响应名单列表，支持*模糊匹配
+export const ResponsiveList=
 ```
