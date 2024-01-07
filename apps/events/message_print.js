@@ -1,4 +1,3 @@
-import { parseStringPromise } from 'xml2js';
 import { emitter } from '../library/helper.js';
 import * as wechat from '../library/wechat.js';
 
@@ -20,7 +19,7 @@ emitter.on('message', async data => {
         case 3:
             console.log(data.extra);
         case 37:
-            const content = await parseStringPromise(data.content);
+            const content = data.content;
             if (content && content.msg && content.msg.$) {
                 const smsg = content.msg.$.content
                 const suser = content.msg.$.sourcenickname
@@ -28,8 +27,7 @@ emitter.on('message', async data => {
             }
             break;
         case 49:
-            const match = /<title>(.*?)<\/title>/.exec(data.content);
-            console.log(match ? match[1] : '{无法识别}');
+            console.log(data.content);
             break;
         default:
             console.log(data.content);

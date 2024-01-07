@@ -11,6 +11,10 @@ emitter.on('message', async data => {
             if (/^gh_/.test(data.sender)) {
                 return;
             }
+            // 忽略模板消息
+            if (typeof data.content != 'string') {
+                return;
+            }
             // 清理消息内容
             data.content = data.content.trim();
             // 处理特权指令

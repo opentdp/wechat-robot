@@ -1,4 +1,3 @@
-import { parseStringPromise } from 'xml2js';
 import { emitter } from '../library/helper.js';
 import * as wechat from '../library/wechat.js';
 
@@ -7,7 +6,7 @@ emitter.on('message', async data => {
     switch (data.type) {
         case 37:
             // 自动接受好友请求
-            const content = await parseStringPromise(data.content);
+            const content = data.content;
             if (content && content.msg && content.msg.$) {
                 wechat.accpetFriend(content.msg.$.scene, content.msg.$.encryptusername, content.msg.$.ticket)
             }
