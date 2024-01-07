@@ -9,9 +9,9 @@ export const WeboxRoot = (process.env.WEBOX_ROOT || 'apps/webroot');
 export const WeboxHost = (process.env.WEBOX_HOST || '127.0.0.1');
 export const WeboxPort = (process.env.WEBOX_PORT || '7660');
 
-// Wechat Rest Api
+// Wechat Rest URL
 
-export const WechaRestApi = (process.env.WECHAT_REST_API || 'http://127.0.0.1:7600');
+export const WechaRestURL = (process.env.WECHAT_REST_URL || 'http://127.0.0.1:7600');
 
 // Google AI 密钥
 

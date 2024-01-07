@@ -21,7 +21,7 @@ export async function preload() {
 
     // 初始化
     wrest = axios.create({
-        baseURL: config.WechaRestApi + '/api',
+        baseURL: config.WechaRestURL + '/api',
         responseType: 'json'
     });
 
