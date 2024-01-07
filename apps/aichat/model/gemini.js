@@ -1,6 +1,7 @@
 import fs from 'fs';
 import axios from 'axios';
 
+import * as config from '../../library/config.js';
 import { history } from '../cmd.js';
 
 /**
@@ -21,7 +22,7 @@ export function preload() {
     gemini = axios.create({
         baseURL: 'https://googai.173371.xyz/v1beta/models',
         headers: {
-            'x-goog-api-key': process.env.GOOGLE_API_KEY,
+            'x-goog-api-key': config.GoogleAiKey,
             'Content-Type': 'application/json',
         },
         responseType: 'json',

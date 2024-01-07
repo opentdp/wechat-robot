@@ -1,6 +1,8 @@
 import path from 'path';
 import axios from 'axios';
 
+import * as config from './config.js';
+
 /**
  * 变量表
  */
@@ -19,7 +21,7 @@ export async function preload() {
 
     // 初始化
     wrest = axios.create({
-        baseURL: process.env.WECHAT_REST_API + '/api',
+        baseURL: config.WechaRestApi + '/api',
         responseType: 'json'
     });
 
@@ -53,7 +55,7 @@ export async function preload() {
 
     // 注册机器人
     await wrest.post('/enable_forward_msg', {
-        'url': `http://127.0.0.1:${process.env.WEBOX_PORT}/reciver`
+        'url': `http://127.0.0.1:${config.WeboxPort}/reciver`
     }).catch(() => { })
 
 }

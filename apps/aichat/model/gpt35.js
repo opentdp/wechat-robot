@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import * as config from '../../library/config.js';
 import { history } from '../cmd.js';
 
 /**
@@ -20,7 +21,7 @@ export function preload() {
     openai = axios.create({
         baseURL: 'https://chat.451024.xyz/v1',
         headers: {
-            'Authorization': process.env.OPENAI_KEY,
+            'Authorization': config.OpenaiKey,
             'Content-Type': 'application/json',
         },
         responseType: 'json',

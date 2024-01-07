@@ -1,5 +1,6 @@
 import webox from 'webox-node';
 
+import * as config from './config.js';
 import { emitter } from './helper.js';
 
 /**
@@ -21,10 +22,10 @@ export function serve() {
 
     // 开启监听
     webox.init({
-        WEBOX_MODE: process.env.WEBOX_MODE,
-        WEBOX_ROOT: process.env.WEBOX_ROOT,
-        WEBOX_HOST: process.env.WEBOX_HOST,
-        WEBOX_PORT: process.env.WEBOX_PORT,
+        WEBOX_MODE: config.WeboxMode,
+        WEBOX_ROOT: config.WeboxRoot,
+        WEBOX_HOST: config.WeboxHost,
+        WEBOX_PORT: config.WeboxPort,
     });
 
 }
