@@ -1,6 +1,7 @@
 import path from 'path';
 import axios from 'axios';
 
+import { logger } from './helper.js';
 import * as config from './config.js';
 
 /**
@@ -20,25 +21,25 @@ export async function preload() {
 
     let resp;
 
-    // 初始化
+    logger(1, '初始化')
     wrest = axios.create({
         baseURL: config.WechaRestURL + '/api',
         responseType: 'json'
     });
 
-    // 获取消息类型
+    logger(1, '获取消息类型')
     resp = await wrest.get('/msg_types');
     if (resp.data.Payload) {
         msgtypes = resp.data.Payload;
     }
 
-    // 获取个人信息
+    logger(1, '获取个人信息')
     resp = await wrest.get('/user_info');
     if (resp.data.Payload) {
         userinfo = resp.data.Payload;
     }
 
-    // 获取好友列表
+    logger(1, '获取好友列表')
     resp = await wrest.get('/friends');
     if (resp.data.Payload) {
         resp.data.Payload.forEach(item => {
@@ -46,7 +47,7 @@ export async function preload() {
         });
     }
 
-    // 获取群列表
+    logger(1, '获取群列表')
     resp = await wrest.get('/chatrooms');
     if (resp.data.Payload) {
         resp.data.Payload.forEach(item => {
@@ -54,7 +55,7 @@ export async function preload() {
         });
     }
 
-    // 注册机器人
+    logger(1, '注册消息回调')
     await wrest.post('/enable_forward_msg', {
         'url': `http://127.0.0.1:${config.WeboxPort}/reciver`
     }).catch(() => { })

@@ -5,9 +5,7 @@ import './events/message_ai.js';
 import './events/message_print.js';
 import './events/message_system.js';
 
-async function init() {
+export default async () => {
     await preload();
     serve();
 }
-
-init();

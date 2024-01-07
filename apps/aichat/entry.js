@@ -7,8 +7,6 @@ export default async function (sender, content, roomid) {
 
     // 权限检查
 
-    console.log(config.ResponsiveMode, config.ResponsiveList)
-
     switch (config.ResponsiveMode) {
         case 0:
             for (let expr of config.ResponsiveList) {
