@@ -21,6 +21,10 @@ export const GoogleAiKey = (process.env.GOOGLE_AI_KEY || '');
 
 export const OpenaiKey = (process.env.OPENAI_KEY || '');
 
+// 管理员列表
+
+export const AdminList = (process.env.ADMIN_LIST || '').split(',');
+
 // 响应模式 [0:黑名单, 1:白名单]
 
 export const ResponsiveMode = parseInt(process.env.OPENAI_KEY || '0');

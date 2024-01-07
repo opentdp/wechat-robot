@@ -41,9 +41,12 @@ GOOGLE_AI_KEY=YOUR-AI-API-KEY
 # OpenAI 密钥
 OPENAI_KEY=YOUR-AI-API-KEY
 
+# 管理员列表
+ADMIN_LIST=
+
 # 响应模式 [0:黑名单, 1:白名单]
-export const ResponsiveMode=0
+RESPONSIVE_MODE=0
 
 # 响应名单列表，支持*模糊匹配
-export const ResponsiveList=
+RESPONSIVE_LIST=
 ```

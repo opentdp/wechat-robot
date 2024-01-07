@@ -11,6 +11,7 @@ let msgtypes = {};
 let userinfo = {};
 const friends = {};
 const chatrooms = {};
+const chatroomMembers = {};
 
 /**
  * 预加载
@@ -105,6 +106,50 @@ export async function getUserName(wxid) {
     }
 
     return '-';
+
+}
+
+/**
+ * 根据昵称获取微信信息
+ * @param {string} name 用户名
+ * @returns {object} 微信信息
+ */
+export async function getInfoByName(name, roomid) {
+
+    for (const info in friends) {
+        if (info.name == name) {
+            return info;
+        }
+    }
+
+    if (roomid) {
+        const rommMembers = await getRoomMembers(roomid);
+        for (const info in rommMembers) {
+            if (info.name == name) {
+                return info;
+            }
+        }
+    }
+
+}
+
+/**
+ * 获取群成员列表
+ * @param {string} roomid 群Id
+ * @returns {array} 成员列表
+ */
+export async function getRoomMembers(roomid) {
+
+    if (chatroomMembers[roomid]) {
+        return chatroomMembers[roomid];
+    }
+
+    const resp = await wrest.get('/chatroom_members/' + roomid);
+    if (resp.data.Payload) {
+        chatroomMembers[roomid] = resp.data.Payload;
+    }
+
+    return chatroomMembers[roomid];
 
 }
 
