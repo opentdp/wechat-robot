@@ -3,25 +3,37 @@ import { config } from 'dotenv';
 config({ override: true });
 
 // Webox 参数配置
-export const WeboxMode = (process.env.WEBOX_MODE || '');
-export const WeboxRoot = (process.env.WEBOX_ROOT || '');
-export const WeboxHost = (process.env.WEBOX_HOST || '');
-export const WeboxPort = (process.env.WEBOX_PORT || '');
+
+export const WeboxMode = (process.env.WEBOX_MODE || 'production');
+export const WeboxRoot = (process.env.WEBOX_ROOT || 'apps/webroot');
+export const WeboxHost = (process.env.WEBOX_HOST || '127.0.0.1');
+export const WeboxPort = (process.env.WEBOX_PORT || '7660');
 
 // Wechat Rest Api
-export const WechaRestApi = (process.env.WECHAT_REST_API || '');
+
+export const WechaRestApi = (process.env.WECHAT_REST_API || 'http://127.0.0.1:7600');
 
 // Google AI 密钥
+
 export const GoogleAiKey = (process.env.GOOGLE_AI_KEY || '');
 
 // Openai 密钥
+
 export const OpenaiKey = (process.env.OPENAI_KEY || '');
 
 // 响应模式 [0:黑名单, 1:白名单]
-export const ResponsiveMode = 0;
 
-// 响应模式名单数据
+export const ResponsiveMode = parseInt(process.env.OPENAI_KEY || '0');
+
+// 响应名单列表，支持*模糊匹配
+
 export const ResponsiveList = (process.env.WHITE_LIST || '').split(',');
+
+ResponsiveList.forEach((item, index) => {
+    item = item.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
+    item = '/^' + item.replace('*', '.*') + '$/';
+    ResponsiveList[index] = new RegExp(item);
+});
 
 // 群聊邀请
 
