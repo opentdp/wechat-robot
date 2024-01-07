@@ -10,14 +10,14 @@ export default async function (sender, content, roomid) {
     switch (config.ResponsiveMode) {
         case 0:
             for (let expr in config.ResponsiveList) {
-                if (expr.test(sender)) {
+                if (expr.test(sender) || (roomid && expr.test(roomid))) {
                     return '智能回复暂不可用';
                 }
             }
             break;
         case 1:
             for (let expr in config.ResponsiveList) {
-                if (!expr.test(sender)) {
+                if (!expr.test(sender) || (roomid && !expr.test(roomid))) {
                     return '智能回复暂不可用';
                 }
             }
