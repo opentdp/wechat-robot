@@ -7,16 +7,18 @@ export default async function (sender, content, roomid) {
 
     // 权限检查
 
+    console.log(config.ResponsiveMode, config.ResponsiveList)
+
     switch (config.ResponsiveMode) {
         case 0:
-            for (let expr in config.ResponsiveList) {
+            for (let expr of config.ResponsiveList) {
                 if (expr.test(sender) || (roomid && expr.test(roomid))) {
                     return '智能回复暂不可用';
                 }
             }
             break;
         case 1:
-            for (let expr in config.ResponsiveList) {
+            for (let expr of config.ResponsiveList) {
                 if (!expr.test(sender) || (roomid && !expr.test(roomid))) {
                     return '智能回复暂不可用';
                 }

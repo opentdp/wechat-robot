@@ -123,8 +123,8 @@ export async function getInfoByName(name, roomid) {
     }
 
     if (roomid) {
-        const rommMembers = await getRoomMembers(roomid);
-        for (const info in rommMembers) {
+        const roomMembers = await getRoomMembers(roomid);
+        for (const info of roomMembers) {
             if (info.name == name) {
                 return info;
             }

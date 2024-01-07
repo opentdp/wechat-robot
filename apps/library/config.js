@@ -27,15 +27,15 @@ export const AdminList = (process.env.ADMIN_LIST || '').split(',');
 
 // 响应模式 [0:黑名单, 1:白名单]
 
-export const ResponsiveMode = parseInt(process.env.OPENAI_KEY || '0');
+export const ResponsiveMode = parseInt(process.env.RESPONSIVE_MODE || '0');
 
 // 响应名单列表，支持*模糊匹配
 
-export const ResponsiveList = (process.env.WHITE_LIST || '').split(',');
+export const ResponsiveList = (process.env.RESPONSIVE_LIST || '').split(',');
 
 ResponsiveList.forEach((item, index) => {
     item = item.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
-    item = '/^' + item.replace('*', '.*') + '$/';
+    item = '^' + item.replace('*', '.*') + '$';
     ResponsiveList[index] = new RegExp(item);
 });
 

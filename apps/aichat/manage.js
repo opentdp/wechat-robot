@@ -10,21 +10,24 @@ export default async function (sender, content, roomid) {
     const [cmd, ...args] = content.split(' ');
 
     switch (cmd) {
-        case 'BAN':
-            banUser(args[0], args[1]);
-            return '已禁止该用户使用智能回复';
+        case '/BAN':
+            return await banUser(args[0], roomid);
         default:
             return '未注册指令';
     }
 
 }
 
-function banUser(name, roomid) {
+async function banUser(name, roomid) {
 
-    const info = wechat.getInfoByName(name, roomid);
+    const info = await wechat.getInfoByName(name, roomid);
 
     if (info) {
-        config.ResponsiveList.push(info.wxid);
+        const expr = info.wxid.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
+        config.ResponsiveList.push(new RegExp('^' + expr + '$'));
+        return '已禁止该用户使用智能回复';
     }
+
+    return '查询用户信息失败';
 
 }
