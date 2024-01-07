@@ -60,10 +60,10 @@ export async function cmd(id, msg) {
                 text = '未注册指令';
                 break;
         }
-        return { text, reply: true }
+        return { text, finally: true }
     }
 
     text = msg.replace(/^\/ai\s/, '').trim();
-    return { text, reply: false }
+    return { text, finally: false }
 
 }

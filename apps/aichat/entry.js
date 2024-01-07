@@ -29,9 +29,9 @@ export default async function (sender, content, roomid) {
     const uuid = sender + (roomid ? '#' + roomid : '');
     const type = models[uuid] || (models[uuid] = 'gemini');
 
-    const resp = await cmd(uuid, content);
-    if (resp.reply) {
-        return resp.text;
+    const req = await cmd(uuid, content);
+    if (req.finally) {
+        return req.text;
     }
 
     // 调用模型回复
@@ -39,10 +39,10 @@ export default async function (sender, content, roomid) {
     switch (type) {
         case 'gemini':
             gemini.preload();
-            return await gemini.chat(uuid, text);
+            return await gemini.chat(uuid, req.text);
         case 'gpt35':
             gpt35.preload();
-            return await gpt35.chat(uuid, text);
+            return await gpt35.chat(uuid, req.text);
     }
 
     return '模型暂不可用';
