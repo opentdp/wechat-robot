@@ -20,7 +20,7 @@ export function preload() {
     }
 
     gemini = axios.create({
-        baseURL: 'https://googai.173371.xyz/v1beta/models',
+        baseURL: config.GoogleAiUrl + '/v1beta/models',
         headers: {
             'x-goog-api-key': config.GoogleAiKey,
             'Content-Type': 'application/json',

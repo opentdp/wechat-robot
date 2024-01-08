@@ -19,7 +19,7 @@ export function preload() {
     }
 
     openai = axios.create({
-        baseURL: 'https://chat.451024.xyz/v1',
+        baseURL: config.OpenaiUrl + '/v1',
         headers: {
             'Authorization': config.OpenaiKey,
             'Content-Type': 'application/json',

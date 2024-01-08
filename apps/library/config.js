@@ -15,10 +15,12 @@ export const WechaRestURL = (process.env.WECHAT_REST_URL || 'http://127.0.0.1:76
 
 // Google AI 密钥
 
+export const GoogleAiUrl = (process.env.GOOGLE_AI_URL || 'https://generativelanguage.googleapis.com');
 export const GoogleAiKey = (process.env.GOOGLE_AI_KEY || '');
 
 // Openai 密钥
 
+export const OpenaiUrl = (process.env.OPENAI_URL || 'https://api.openai.com');
 export const OpenaiKey = (process.env.OPENAI_KEY || '');
 
 // 管理员列表

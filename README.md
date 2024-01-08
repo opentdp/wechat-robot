@@ -37,9 +37,11 @@ WEBOX_PORT=7660
 WECHAT_REST_URL=http://127.0.0.1:7600
 
 # Google AI 密钥
+GOOGLE_AI_URL=https://googai.173371.xyz
 GOOGLE_AI_KEY=YOUR-AI-API-KEY
 
 # OpenAI 密钥
+OPENAI_URL=https://chat.451024.xyz
 OPENAI_KEY=YOUR-AI-API-KEY
 
 # 管理员列表
@@ -50,4 +52,5 @@ RESPONSIVE_MODE=0
 
 # 响应名单列表，支持*模糊匹配
 RESPONSIVE_LIST=
+
 ```
