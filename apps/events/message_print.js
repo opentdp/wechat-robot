@@ -12,25 +12,14 @@ emitter.on('message', async data => {
     const type = await wechat.getMsgType(data.type);
     console.log(`\n[${from}]`, `type=${type}`, `id=${data.id}`);
 
-    switch (data.type) {
-        case 1:
-            console.log(data.content);
-            break;
-        case 3:
-            console.log(data.extra);
-        case 37:
-            const content = data.content;
-            if (content && content.msg && content.msg.$) {
-                const smsg = content.msg.$.content
-                const suser = content.msg.$.sourcenickname
-                console.log('收到好友请求', smsg ? `备注：${smsg}` : '', suser ? `来自 ${suser} 分享的名片` : '');
-            }
-            break;
-        case 49:
-            console.log(data.content);
-            break;
-        default:
-            console.log(data.content);
+    if (typeof data.content == 'string') {
+        console.log('>> content =', data.content);
+    } else {
+        console.log('>> content =', JSON.stringify(data.content));
+    }
+
+    if (data.xml) {
+        console.log('>> xml =', JSON.stringify(data.xml));
     }
 
 });
